@@ -1,0 +1,8 @@
+# PyCharm
+.idea/
+
+# pipenv
+venv
+
+# pyenv
+.python-version

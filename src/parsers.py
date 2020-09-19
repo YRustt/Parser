@@ -96,6 +96,9 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
             if not urls:
                 break
 
+            for idx, url in enumerate(urls):
+                logger.debug(f"{self.__page} {idx} {url}")
+
             yield from (Url(url) for url in urls)
 
 

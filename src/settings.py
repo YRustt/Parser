@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 
 from functools import partial
@@ -11,9 +12,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 DRIVERS_DIR = os.path.join(ROOT_DIR, "drivers")
-CHROMEDRIVER_PATH = os.path.join(DRIVERS_DIR, "chromedriver.exe")
-GECKODRIVER_PATH = os.path.join(DRIVERS_DIR, "geckodriver.exe")
-IEDRIVER_PATH = os.path.join(DRIVERS_DIR, "iedriver.exe")
+if sys.platform.startswith("win"):
+    CHROMEDRIVER_PATH = os.path.join(DRIVERS_DIR, "chromedriver.exe")
+    GECKODRIVER_PATH = os.path.join(DRIVERS_DIR, "geckodriver.exe")
+    IEDRIVER_PATH = os.path.join(DRIVERS_DIR, "iedriver.exe")
+elif sys.platform.startswith("linux"):
+    CHROMEDRIVER_PATH = os.path.join(DRIVERS_DIR, "chromedriver")
+    GECKODRIVER_PATH = None
+    IEDRIVER_PATH = None
 
 FILES_DIR = os.path.join(ROOT_DIR, "files")
 CATEGORIES_PATH = os.path.join(FILES_DIR, "categories.csv")

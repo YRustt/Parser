@@ -24,9 +24,13 @@ class CSVWriter:
         if self.__file is not None:
             self.__file.close()
 
-    def write(self, parser):
+    def writerows(self, items):
         self.__setup()
-        self.__writer.writerows(item.as_dict() for item in parser)
+        self.__writer.writerows(item.as_dict() for item in items)
+
+    def writerow(self, item):
+        self.__setup()
+        self.__writer.writerow(item.as_dict())
 
 
 class DBWriter:

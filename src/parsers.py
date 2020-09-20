@@ -74,10 +74,10 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
     def __init__(self, category):
         self.__category = category
         self.__page = 1
+        self.__repeat = 0
 
     def _get_url(self):
         get_args = urlencode({"page": self.__page})
-        self.__page += 1
 
         if self.__category.url.startswith("http"):
             return f"{self.__category.url}?{get_args}"
@@ -85,6 +85,16 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
             return f"https:{self.__category.url}?{get_args}"
         else:
             return f"https://{self.__category.url}?{get_args}"
+
+    def _next_page(self):
+        self.__page += 1
+        self.__repeat = 0
+
+    def _check_repeat(self):
+        return self.__repeat < 5
+
+    def _next_repeat(self):
+        self.__repeat += 1
 
     def parse(self):
         while True:
@@ -94,12 +104,17 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
             urls = tree.xpath(self.PRODUCT_URL_XPATH)
 
             if not urls:
+                if self._check_repeat():
+                    self._next_repeat()
+                    continue
                 break
 
             for idx, url in enumerate(urls):
                 logger.debug(f"{self.__page} {idx} {url}")
 
             yield from (Url(url) for url in urls)
+
+            self._next_page()
 
 
 class ProductParser(Parser, GetPageMixin):

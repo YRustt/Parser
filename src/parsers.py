@@ -2,9 +2,9 @@ import logging
 import requests
 
 from abc import ABCMeta, abstractmethod
-from urllib.parse import urlencode
 from lxml import html
 
+from utils import make_url
 from browsers import ChromeBrowser, FirefoxBrowser, IeBrowser
 from models import Category, Product, Url
 
@@ -77,14 +77,7 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
         self.__repeat = 0
 
     def _get_url(self):
-        get_args = urlencode({"page": self.__page})
-
-        if self.__category.url.startswith("http"):
-            return f"{self.__category.url}?{get_args}"
-        elif self.__category.url.startswith("//"):
-            return f"https:{self.__category.url}?{get_args}"
-        else:
-            return f"https://{self.__category.url}?{get_args}"
+        return make_url(self.__category.url, page=self.__page)
 
     def _next_page(self):
         self.__page += 1
@@ -117,6 +110,33 @@ class CategoryDetailParser(Parser, GetPageViaBrowserMixin):
             self._next_page()
 
 
-class ProductParser(Parser, GetPageMixin):
+class ProductParser(Parser, GetPageViaBrowserMixin):
+    DESCRIPTION_XPATH = "//div[@class='product-title']/h1[@class='product-title-text']/text()"
+    NUMBER_OF_ORDERS_XPATH = "//div[@class='product-reviewer']/span[@class='product-reviewer-sold']/text()"
+    PRICE_XPATH = "//div[@class='product-price']/div[@class='product-price-current']/span[@class='product-price-value']/text()"
+
     def __init__(self, url):
         self.__url = url
+
+    def _get_url(self):
+        return make_url(self.__url.url)
+
+    def __get_id_from_url(self):
+        url = self._get_url()
+        return url.split("/")[-1].split(".")[0]
+
+    def parse(self):
+        text = self._get_page()
+        tree = html.fromstring(text)
+
+        id = self.__get_id_from_url()
+
+        description = tree.xpath(self.DESCRIPTION_XPATH)[0]
+
+        tmp = tree.xpath(self.NUMBER_OF_ORDERS_XPATH)
+        number_of_orders = tmp[0] if tmp else None
+
+        tmp = tree.xpath(self.PRICE_XPATH)
+        price = tmp[0] if tmp else None
+
+        return Product(id=id, description=description, number_of_orders=number_of_orders, price=price)

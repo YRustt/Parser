@@ -29,11 +29,9 @@ class Product(FieldInfoMixin):
     """
 
     id: str
-    name: str = field(compare=False, hash=False)
     description: str = field(compare=False, hash=False)
-    number_of_orders: int = field(compare=False, hash=False)
-    min_price: Optional[float] = field(compare=False, hash=False)
-    max_price: Optional[float] = field(compare=False, hash=False)
+    number_of_orders: Optional[str] = field(compare=False, hash=False)
+    price: Optional[str] = field(compare=False, hash=False)
 
 
 @dataclass(init=True, repr=True, eq=True, order=True, frozen=True)

@@ -42,4 +42,5 @@ get_product_urls_filepath = partial(get_filepath, filename="urls.csv")
 get_products_filepath = partial(get_filepath, filename="products.csv")
 
 SLEEP_TIME_FOR_LOGIN = 60 * 2
-SLEEP_TIME_FOR_NEXT_PAGE = 20
+SLEEP_TIME_FOR_NEXT_PAGE = 10
+SLEEP_TIME_FOR_PAGE_SCROLLING = 1

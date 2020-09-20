@@ -6,7 +6,8 @@ from settings import (
     GECKODRIVER_PATH,
     IEDRIVER_PATH,
     SLEEP_TIME_FOR_LOGIN, 
-    SLEEP_TIME_FOR_NEXT_PAGE
+    SLEEP_TIME_FOR_NEXT_PAGE,
+    SLEEP_TIME_FOR_PAGE_SCROLLING
 )
 
 
@@ -29,6 +30,11 @@ class Browser:
 
     def get_page(self, url):
         self._browser.get(url)
+        # Scroll down to load all products
+        total_height = int(self._browser.execute_script("return document.body.scrollHeight"))
+        for height in range(1, total_height, total_height // 10):
+            self._browser.execute_script(f"window.scrollTo(0,{height})")
+            time.sleep(SLEEP_TIME_FOR_PAGE_SCROLLING)
         time.sleep(SLEEP_TIME_FOR_NEXT_PAGE)
         return self._browser.page_source
 

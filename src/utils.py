@@ -18,3 +18,7 @@ def make_url(url, **kwargs):
             return f"{url}?{get_args}"
 
     return url
+
+
+def get_product_id_from_url(url):
+    return url.split("/")[-1].split(".")[0]

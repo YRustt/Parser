@@ -1,5 +1,5 @@
 import time
-from selenium.webdriver import Chrome, Firefox, Ie
+from selenium.webdriver import Chrome, Firefox, Ie, ActionChains
 
 from settings import (
     CHROMEDRIVER_PATH, 
@@ -32,10 +32,12 @@ class Browser:
         self._browser.get(url)
         # Scroll down to load all products
         total_height = int(self._browser.execute_script("return document.body.scrollHeight"))
+        
         for height in range(1, total_height, total_height // 10):
             self._browser.execute_script(f"window.scrollTo(0,{height})")
             time.sleep(SLEEP_TIME_FOR_PAGE_SCROLLING)
         time.sleep(SLEEP_TIME_FOR_NEXT_PAGE)
+
         return self._browser.page_source
 
 

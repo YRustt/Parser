@@ -40,7 +40,8 @@ def get_filepath(category_name, subcategory_name, filename):
 
 get_product_urls_filepath = partial(get_filepath, filename="urls.csv")
 get_products_filepath = partial(get_filepath, filename="products.csv")
+get_products_from_category_detail_filepath = partial(get_filepath, filename="products_from_category_detail.csv")
 
 SLEEP_TIME_FOR_LOGIN = 60 * 2
-SLEEP_TIME_FOR_NEXT_PAGE = 10
+SLEEP_TIME_FOR_NEXT_PAGE = 15
 SLEEP_TIME_FOR_PAGE_SCROLLING = 1

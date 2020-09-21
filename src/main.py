@@ -14,17 +14,17 @@ if __name__ == "__main__":
     #     writer.writerows(parser.parse())
 
 
-    with open(CATEGORIES_PATH, "r") as f:
+    with open(CATEGORIES_PATH, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f, delimiter="\t")
-        for i in range(30):
+        for i in range(36):
             print(next(reader))
 
-        for category in reader:
-            category = Category(**category)
-            category_parser = CategoryDetailParser(category)
-            filename = get_product_urls_filepath(category.category_name, category.subcategory_name)
-            with CSVWriter(filename, Url) as writer:
-                writer.writerows(category_parser.parse())
+        # for category in reader:
+        #     category = Category(**category)
+        #     category_parser = CategoryDetailParser(category)
+        #     filename = get_product_urls_filepath(category.category_name, category.subcategory_name)
+        #     with CSVWriter(filename, Url) as writer:
+        #         writer.writerows(category_parser.parse())
 
 
     # with open(CATEGORIES_PATH, "r") as f:

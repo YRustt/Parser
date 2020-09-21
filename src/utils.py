@@ -12,6 +12,9 @@ def make_url(url, **kwargs):
         url = f"https://{url}"
 
     if get_args is not None:
-        return f"{url}?{get_args}"
+        if "?" in url:
+            return f"{url}&{get_args}"
+        else:
+            return f"{url}?{get_args}"
 
     return url

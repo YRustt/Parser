@@ -78,9 +78,15 @@ if __name__ == "__main__":
     
         for category in reader:
             if category["category_name"] in ["Мобильные телефоны и аксессуары", "Компьютерная и офисная техника"]:
-                category = Category(**category)
-                product_parser = ProductFromCategoryDetailParser(category)
-                filename = get_products_from_category_detail_filepath(category.category_name, category.subcategory_name)
-                with CSVWriter(filename, Product) as writer:
-                    for product in product_parser.parse():
-                        writer.writerow(product)
+                if category["subcategory_name"] not in [
+                    "Мобильные телефоны",
+                    "Apple iPhone",
+                    "Смартфоны",
+                    "Восстановленные телефоны",
+                ]:
+                    category = Category(**category)
+                    product_parser = ProductFromCategoryDetailParser(category)
+                    filename = get_products_from_category_detail_filepath(category.category_name, category.subcategory_name)
+                    with CSVWriter(filename, Product) as writer:
+                        for product in product_parser.parse():
+                            writer.writerow(product)

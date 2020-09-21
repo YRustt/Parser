@@ -32,7 +32,7 @@ class Product(FieldInfoMixin):
     description: str = field(compare=False, hash=False)
     number_of_orders: Optional[str] = field(compare=False, hash=False)
     price: Optional[str] = field(compare=False, hash=False)
-    url: str = field(compare=False, hash=False)
+    url: Optional[str] = field(compare=False, hash=False)
 
 
 @dataclass(init=True, repr=True, eq=True, order=True, frozen=True)

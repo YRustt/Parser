@@ -16,7 +16,7 @@ class CSVWriter:
 
     def __setup(self):
         if self.__file is None:
-            self.__file = open(self.__filename, "w", newline="")
+            self.__file = open(self.__filename, "w", newline="", encoding="utf-8")
             self.__writer = csv.DictWriter(self.__file, fieldnames=self.__model.field_names(), delimiter="\t")
             self.__writer.writeheader()
 

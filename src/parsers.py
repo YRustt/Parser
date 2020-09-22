@@ -173,8 +173,14 @@ class ProductFromCategoryDetailParser(Parser, GetPageViaBrowserMixin):
     def _next_repeat(self):
         self.__repeat += 1
 
+    def _check_limit(self):
+        return self.__page < 70
+
     def parse(self):
         while True:
+            if not self._check_limit():
+                break
+
             text = self._get_page()
             tree = html.fromstring(text)
 

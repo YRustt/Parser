@@ -83,6 +83,9 @@ if __name__ == "__main__":
                     "Apple iPhone",
                     "Смартфоны",
                     "Восстановленные телефоны",
+                    "Аксессуары для мобильных телефонов",
+                    "Запчасти для мобильных телефонов",
+                    "Внешние аккумуляторы",
                 ]:
                     category = Category(**category)
                     product_parser = ProductFromCategoryDetailParser(category)

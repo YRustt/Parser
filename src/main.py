@@ -77,20 +77,10 @@ if __name__ == "__main__":
         reader = csv.DictReader(f, delimiter="\t")
     
         for category in reader:
-            if category["category_name"] in ["Лампы и освещение"]:
-                if category["subcategory_name"] not in [
-                    "Лампы и абажуры",
-                    "Потолочные лампы и вентиляторы",
-                    "Лампочки",
-                    "Светодиодная подсветка",
-                    "Наружное освещение",
-                    "Светодиодные лампы",
-                    "Портативное освещение",
-                    "Производственное освещение"
-                ]:
-                    category = Category(**category)
-                    product_parser = ProductFromCategoryDetailParser(category)
-                    filename = get_products_from_category_detail_filepath(category.category_name, category.subcategory_name)
-                    with CSVWriter(filename, Product) as writer:
-                        for product in product_parser.parse():
-                            writer.writerow(product)
+            if category["category_name"] in ["Багаж и сумки"]:
+                category = Category(**category)
+                product_parser = ProductFromCategoryDetailParser(category)
+                filename = get_products_from_category_detail_filepath(category.category_name, category.subcategory_name)
+                with CSVWriter(filename, Product) as writer:
+                    for product in product_parser.parse():
+                        writer.writerow(product)

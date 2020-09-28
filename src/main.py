@@ -77,7 +77,7 @@ if __name__ == "__main__":
         reader = csv.DictReader(f, delimiter="\t")
     
         for category in reader:
-            if category["category_name"] in ["Багаж и сумки"]:
+            if category["category_name"] in ["Женская одежда"]:
                 category = Category(**category)
                 product_parser = ProductFromCategoryDetailParser(category)
                 filename = get_products_from_category_detail_filepath(category.category_name, category.subcategory_name)
